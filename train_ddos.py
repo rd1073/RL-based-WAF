@@ -1,36 +1,33 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.svm import SVC
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.metrics import classification_report, accuracy_score
+from sklearn.impute import SimpleImputer
 import joblib
 
 # Load the DDoS dataset
-ddos_data = pd.read_csv('APA-DDoS-Dataset.csv', low_memory=False)  # Update with your actual CSV file path
+ddos_data = pd.read_csv('APA-DDoS-Dataset.csv', low_memory=False)
 
 # Check for mixed types and NaN values
 print("Data types in the dataset:")
-print(ddos_data.dtypes)  # View data types of each column
+print(ddos_data.dtypes)
 print("\nCount of NaN values in each column:")
-print(ddos_data.isna().sum())  # Count of NaN values in each column
+print(ddos_data.isna().sum())
 
-# Handle NaN values (fill or drop)
-ddos_data.fillna(0, inplace=True)  # Fill NaN values with 0
-
-# Display the first few rows of the dataset for inspection
-print("\nFirst few rows of the dataset:")
-print(ddos_data.head())
+# Handle NaN values (impute with mean)
+imputer = SimpleImputer(strategy='mean')
+ddos_data.fillna(0, inplace=True)  # Fill NaN values with 0, can be changed based on context
 
 # Preprocess the dataset
-# Convert categorical features to numerical values using Label Encoding
 le_src_ip = LabelEncoder()
 le_dst_ip = LabelEncoder()
 le_label = LabelEncoder()
 
-ddos_data['ip.src'] = le_src_ip.fit_transform(ddos_data['ip.src'].astype(str))  # Ensure IPs are strings
-ddos_data['ip.dst'] = le_dst_ip.fit_transform(ddos_data['ip.dst'].astype(str))  # Ensure IPs are strings
-ddos_data['Label'] = le_label.fit_transform(ddos_data['Label'].astype(str))  # Ensure labels are strings
+ddos_data['ip.src'] = le_src_ip.fit_transform(ddos_data['ip.src'].astype(str))
+ddos_data['ip.dst'] = le_dst_ip.fit_transform(ddos_data['ip.dst'].astype(str))
+ddos_data['Label'] = le_label.fit_transform(ddos_data['Label'].astype(str))
 
 # Select features and labels
 features = ddos_data[['ip.src', 'ip.dst', 'tcp.srcport', 'tcp.dstport', 
@@ -40,10 +37,6 @@ features = ddos_data[['ip.src', 'ip.dst', 'tcp.srcport', 'tcp.dstport',
                        'tcp.seq', 'tcp.ack', 'Packets', 'Bytes']]
 
 labels = ddos_data['Label']
-
-# Check for NaN values again after encoding
-print("\nCount of NaN values in each column after encoding:")
-print(features.isna().sum())  # Check if there are any NaN values left
 
 # Ensure features are numeric (if necessary)
 features = features.apply(pd.to_numeric, errors='coerce')
@@ -55,9 +48,18 @@ labels = labels[features.index]  # Align labels with modified features
 # Split the dataset into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42)
 
+# Scale the features
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
 # Train the SVM model
-svm_ddos_model = SVC(kernel='linear')  # You can change the kernel as needed
+svm_ddos_model = SVC(kernel='linear')  # Change kernel as necessary
 svm_ddos_model.fit(X_train, y_train)
+
+# Evaluate using cross-validation
+cv_scores = cross_val_score(svm_ddos_model, X_train, y_train, cv=5)
+print(f"Cross-validated accuracy: {np.mean(cv_scores):.2f}")
 
 # Make predictions on the test set
 y_pred = svm_ddos_model.predict(X_test)
@@ -69,6 +71,7 @@ print(classification_report(y_test, y_pred))
 
 # Save the model and label encoders
 joblib.dump(svm_ddos_model, 'svm_ddos_model.pkl')
+joblib.dump(scaler, 'scaler.pkl')  # Save the scaler for future use
 joblib.dump(le_src_ip, 'le_src_ip.pkl')
 joblib.dump(le_dst_ip, 'le_dst_ip.pkl')
 joblib.dump(le_label, 'le_label.pkl')
