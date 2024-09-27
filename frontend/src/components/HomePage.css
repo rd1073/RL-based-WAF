@@ -1,0 +1,93 @@
+/* HomePage.css */
+.homepage {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .attack-counters {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .counter {
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 250px;
+  }
+  
+  .counter.sql {
+    background-color: #ffcccc;
+  }
+  
+  .counter.xss {
+    background-color: #ffe699;
+  }
+  
+  .counter.ddos {
+    background-color: #ccffcc;
+  }
+  
+  .firewall-settings {
+    margin-top: 20px;
+  }
+  
+  .settings-group {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  button.enabled {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  button.disabled {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .attack-log {
+    margin-top: 20px;
+  }
+  
+  table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 80%;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .popup-notification {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ff4444;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  

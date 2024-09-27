@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 import joblib
 import pandas as pd
 
+#DDOS KA aap.py
+
 app = Flask(__name__)
 
 # Load the model and label encoders
