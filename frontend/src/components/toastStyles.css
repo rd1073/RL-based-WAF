@@ -1,0 +1,27 @@
+/* toastStyles.css */
+
+.custom-toast {
+    width: 800px;  /* Make the toast wider */
+    height: 250px;            /* Increase the height */
+    text-align: center;       /* Center-align the text */
+  /* Dark background for contrast */
+    border-radius: 20px;      /* Rounded corners */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); /* Add a larger shadow */
+  }
+  
+  .custom-toast-body {
+    display: flex;           /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    font-size: 32px;         /* Larger font size */
+    font-weight: 700;        /* Make text bold */
+    color: red;              /* Red text color */
+  }
+  
+  .Toastify__close-button {
+    color: #fff;             /* White close button for contrast */
+    font-size: 24px;         /* Increase close button size */
+  }
+  
+   
+  
