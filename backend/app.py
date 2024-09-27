@@ -11,9 +11,9 @@ socketio = SocketIO(app, cors_allowed_origins="*",async_mode='eventlet')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load models and vectorizers
-model = joblib.load('svm_model.pkl')
+model = joblib.load('rl_model.pkl')
 vectorizer = joblib.load('tfidf_vectorizer.pkl')
-svm_ddos_model = joblib.load('svm_ddos_model.pkl')
+svm_ddos_model = joblib.load('rl_ddos_model.pkl')
 le_src_ip = joblib.load('le_src_ip.pkl')
 le_dst_ip = joblib.load('le_dst_ip.pkl')
 
