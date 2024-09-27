@@ -1,8 +1,14 @@
 from flask import Flask, request, jsonify
 import pandas as pd
+import time
 import joblib
+from flask_socketio import SocketIO, emit
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+socketio = SocketIO(app, cors_allowed_origins="*",async_mode='eventlet')
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load models and vectorizers
 model = joblib.load('svm_model.pkl')
@@ -57,7 +63,12 @@ def submit_query():
             "time": pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S'),
             "type": "DDOS Attack",
             "ip": src_ip,
-            "action": "Blocked"})            
+            "action": "Blocked"})   
+            socketio.emit('response_message', {'message': 'Request blocked: DDoS attack detected.'})
+            #print(f"Emitted message to frontend: DDoS attack detected.")
+
+            time.sleep(0.3)
+         
             return jsonify({"message": "Request blocked: DDoS attack detected."}), 403
         else:
             attack_count['sql'] += 1
@@ -68,6 +79,11 @@ def submit_query():
                 "ip": src_ip,
                 "action": "Blocked"
             })
+            socketio.emit('response_message', {"message": "Request blocked: SQL injection detected."})
+            #print(f"Emitted message to frontend: SQL injection detected.")
+
+            time.sleep(0.3)
+
             return jsonify({"message": "Request blocked: SQL Injection detected."}), 403
 
     elif firewall_settings["xss_detection_enabled"] and prediction == 2:
@@ -79,7 +95,10 @@ def submit_query():
             "time": pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S'),
             "type": "DDOS Attack",
             "ip": src_ip,
-            "action": "Blocked"})            
+            "action": "Blocked"})   
+            socketio.emit('response_message', {'message': 'Request blocked: DDoS attack detected.'})
+            time.sleep(0.3)
+         
             return jsonify({"message": "Request blocked: DDoS attack detected."}), 403
         else:
             attack_count['xss'] += 1
@@ -89,6 +108,9 @@ def submit_query():
                 "ip": src_ip,
                 "action": "Blocked"
             })
+            socketio.emit('response_message', {"message": "Request blocked: Cross-Site Scripting detected."})
+            time.sleep(0.3)
+
             return jsonify({"message": "Request blocked: Cross-Site Scripting detected."}), 403
 
     # Check for DDoS attack if DDoS protection is enabled
@@ -164,7 +186,9 @@ def reset_settings():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+        socketio.run(app, host='127.0.0.1', port=5000, debug=True,use_reloader=False)
+
+
 
 
 
