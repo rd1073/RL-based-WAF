@@ -50,7 +50,7 @@ const RealTimeMessage = () => {
 
   return (
     <div style={{ padding: '20px', textAlign: 'center' }}>
-    <h1>Real-Time Firewall Alerts</h1>
+    <h1>Minor Project, NWC, 2024- A Reinforcement Learning based Firewall</h1>
     <ToastContainer
       limit={1} // Only show one notification at a time
       closeButton={true} // Show a close button on the notification
