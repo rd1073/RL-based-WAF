@@ -36,7 +36,7 @@ const RealTimeMessage = () => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: false,
-        autoClose: 6000, // Keep the notification visible for 8 seconds
+        autoClose: 5000, // Keep the notification visible for 8 seconds
         transition: Slide, // Use a slide-in animation
       });
     });

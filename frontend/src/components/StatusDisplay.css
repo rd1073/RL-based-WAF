@@ -1,0 +1,70 @@
+/* StatusDisplay.css */
+
+.status-display {
+    padding: 30px;
+    text-align: center;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif; /* Adding a better font for readability */
+  }
+  
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+  }
+  
+  h1 {
+    font-size: 36px; /* Larger title */
+    color: #333;
+  }
+  
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #007bff;
+    font-size: 28px; /* Bigger headers */
+  }
+  
+  h2 svg {
+    margin-right: 10px;
+    font-size: 1.5em; /* Increased icon size */
+  }
+  
+  .count-container {
+    display: flex;
+    justify-content: space-around; /* Align items in a row */
+    margin-top: 15px;
+  }
+  
+  .count-item {
+    font-size: 24px; /* Larger font size for counts */
+    font-weight: bold; /* Bold text */
+    color: #dc3545; /* Red color for counts */
+  }
+  
+  .log-list {
+    max-height: 300px; /* Increased height */
+    overflow-y: auto; /* Scroll if necessary */
+    padding: 0 20px;
+    text-align: left; /* Align text to the left */
+  }
+  
+  .log-item {
+    margin: 10px 0; /* Space between log items */
+    font-size: 20px; /* Larger font size */
+  }
+  
+  .settings-list {
+    text-align: left; /* Align text to the left */
+  }
+  
+  .settings-item {
+    font-size: 20px; /* Larger font size for settings */
+    margin: 10px 0; /* Space between settings items */
+  }
+  
