@@ -20,10 +20,7 @@ class FirewallEnv:
         return self.state
 
     def step(self, action):
-        """
-        Take an action and return the next state, reward, and whether the episode is done.
-        action: 0 for Allow, 1 for Block
-        """
+         
         request, label = self.state
 
         # Define rewards
