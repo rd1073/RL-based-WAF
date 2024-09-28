@@ -16,7 +16,7 @@ class FirewallEnv:
     def step(self, action):
         label = self.data.iloc[self.current_query_index]['label']
         reward = 0
-        if label == 1:  # SQL Injection
+        if label == 1:  # SQL Injection and xxs
             if action == 0:  # Block
                 reward = 1  # Good job
             else:  # Allow

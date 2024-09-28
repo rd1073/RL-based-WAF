@@ -11,7 +11,7 @@ def submit_query():
     data = request.get_json()
     query = data.get('query', '')
 
-    # Simple keyword matching for SQLi detection (could be enhanced)
+    # Simple keyword matching for SQLi detection and xxs (could be enhanced)
     state = 0 if any(keyword in query.lower() for keyword in ['select', 'union', 'or', '--', 'drop']) else 1
 
     action = np.argmax(q_table[state])  # Get the action from the Q-table

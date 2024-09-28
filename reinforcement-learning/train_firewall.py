@@ -5,7 +5,7 @@ from q_learning_agent import QLearningAgent
 
 if __name__ == "__main__":
     # Load your dataset
-    dataset_path = "reinforcement-learning/sql_injection_dataset.csv"  # Update this with your actual dataset path
+    dataset_path = "combined_attacks_data.csv"  # Update this with your actual dataset path
     data = pd.read_csv(dataset_path)
 
     # Initialize environment and agent
